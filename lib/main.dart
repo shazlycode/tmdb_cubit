@@ -14,8 +14,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => MoviesCubit(MoviesInitial()),
-      child:const MaterialApp(
+      create: (context) => MoviesCubit(),
+      child: const MaterialApp(
         home: MoviesScreen(),
       ),
     );

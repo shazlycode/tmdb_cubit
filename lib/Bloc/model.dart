@@ -1,9 +1,9 @@
 class Movie {
-  final int? id;
+  final String? id;
   final bool? adult;
-  final int? backdrop_path;
+  final String? backdrop_path;
   final List? genre_ids;
-  final double? popularity;
+  final String? popularity;
   final String? original_language;
   final String? original_title;
   final String? overview;
@@ -11,8 +11,8 @@ class Movie {
   final String? release_date;
   final String? title;
   final bool? video;
-  final double? vote_average;
-  final int? vote_count;
+  final String? vote_average;
+  final String? vote_count;
 
   Movie(
       {required this.id,
@@ -32,9 +32,9 @@ class Movie {
 
   factory Movie.fromJson(Map<String, dynamic> json) {
     return Movie(
-      id: int.tryParse(json['id'].toString()),
+      id: json['id'].toString(),
       adult: json['adult'],
-      backdrop_path: int.tryParse(json['backdrop_path']),
+      backdrop_path: json['backdrop_path'].toString(),
       genre_ids: json['genre_ids'].toList(),
       popularity: json['popularity'],
       original_language: json['original_language'],
@@ -44,8 +44,8 @@ class Movie {
       release_date: json['release_date'],
       title: json['title'],
       video: json['video'],
-      vote_average: json['vote_average'],
-      vote_count: int.tryParse(json['vote_count']),
+      vote_average: json['vote_average'].toString(),
+      vote_count: json['vote_count'].toString(),
     );
   }
 }
