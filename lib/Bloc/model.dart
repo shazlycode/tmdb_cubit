@@ -11,7 +11,7 @@ class Movie {
   final String? release_date;
   final String? title;
   final bool? video;
-  final String? vote_average;
+  final double? vote_average;
   final String? vote_count;
 
   Movie(
@@ -44,7 +44,7 @@ class Movie {
       release_date: json['release_date'],
       title: json['title'],
       video: json['video'],
-      vote_average: json['vote_average'].toString(),
+      vote_average: json['vote_average'],
       vote_count: json['vote_count'].toString(),
     );
   }

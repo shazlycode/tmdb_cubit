@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myapp/Bloc/cubit.dart';
-import 'package:myapp/Bloc/states.dart';
+
 import 'package:myapp/constants/constants.dart';
+import 'package:myapp/screens/movie_details_screen.dart';
 
 class MoviesScreen extends StatefulWidget {
   const MoviesScreen({super.key});
@@ -19,12 +20,14 @@ class _MoviesScreenState extends State<MoviesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = MoviesCubit.get(context);
+
     return Scaffold(
         appBar: AppBar(
           title: const Text("Movies"),
         ),
         body: FutureBuilder(
-            future: context.read<MoviesCubit>().fetchMovies(),
+            future: cubit.fetchMovies(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());
@@ -34,16 +37,27 @@ class _MoviesScreenState extends State<MoviesScreen> {
                 );
               } else {
                 return ListView.builder(
-                    padding: EdgeInsets.all(5),
-                    itemCount: snapshot.data.length,
+                    padding: const EdgeInsets.all(5),
+                    itemCount: cubit.movies.length,
                     itemBuilder: (context, index) {
-                      return ListTile(
-                        leading: ClipRRect(
-                          borderRadius: BorderRadius.circular(5),
-                          child: Image.network(
-                              "$baseImageUrl${snapshot.data[index].poster_path}"),
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MovieDetails(
+                                      movie: cubit.movies[index])));
+                        },
+                        child: ListTile(
+                          leading: ClipRRect(
+                            borderRadius: BorderRadius.circular(5),
+                            child: Image.network(
+                                "$baseImageUrl$smallSize${cubit.movies[index].poster_path}"),
+                          ),
+                          title: Text(cubit.movies[index].title!),
+                          subtitle: Text(
+                              "Vote: ${cubit.movies[index].vote_average!.toStringAsFixed(2)}"),
                         ),
-                        title: Text(snapshot.data[index].title),
                       );
                     });
               }

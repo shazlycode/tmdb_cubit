@@ -35,7 +35,6 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Movie> _movies = [];
   bool _isLoading = true;
 
-
   @override
   void initState() {
     super.initState();
@@ -64,6 +63,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              content: Text("How Are You Today?!!!"),
+            );
+          });
+    });
     return Scaffold(
       appBar: AppBar(title: const Text('TMDB Movies')),
       body: _isLoading
